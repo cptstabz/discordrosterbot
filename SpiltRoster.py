@@ -23,21 +23,21 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 # Define classes and their tier tokens
 classes = {
-    "Evoker": "Zenith",
-    "Monk": "Zenith",
-    "Rogue": "Zenith",
-    "Warrior": "Zenith",
-    "Death Knight": "Dreadful",
-    "Demon Hunter": "Dreadful",
-    "Warlock": "Dreadful",
-    "Druid": "Mystic",
-    "Boomkin Druid": "Mystic",
-    "Hunter": "Mystic",
-    "Mage": "Mystic",
-    "Paladin": "Venerated",
-    "Priest": "Venerated",
-    "Shaman": "Venerated",
-    "Elemental Shaman": "Venerated"
+    "Evoker": "Zenith, Mail",
+    "Monk": "Zenith, Leather",
+    "Rogue": "Zenith, Leather",
+    "Warrior": "Zenith, Plate",
+    "Death Knight": "Dreadful, Plate",
+    "Demon Hunter": "Dreadful, Leather",
+    "Warlock": "Dreadful, Cloth",
+    "Druid": "Mystic, Leather",
+    "Boomkin Druid": "Mystic, Leather",
+    "Hunter": "Mystic, Mail",
+    "Mage": "Mystic, Cloth",
+    "Paladin": "Venerated, Plate",
+    "Priest": "Venerated, Cloth",
+    "Shaman": "Venerated, Mail",
+    "Elemental Shaman": "Venerated, Mail"
 }
 
 # Define required classes for raid buffs
