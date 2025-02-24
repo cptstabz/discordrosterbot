@@ -6,22 +6,22 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Define bot with command prefix
+
 intents = discord.Intents.default()
 intents.messages = True
-intents.message_content = True  # Enable message content intent
+intents.message_content = True  
 
-bot = commands.Bot(command_prefix="!", intents=intents)  # ✅ Ensure bot is defined BEFORE calling bot.run()
+bot = commands.Bot(command_prefix="!", intents=intents)  
 
-# Define intents
+
 intents = discord.Intents.default()
 intents.messages = True
-intents.message_content = True  # Enable message content intent
+intents.message_content = True  
 
-# Create bot instance
+
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# Define classes and their tier tokens
+# tier tokens
 classes = {
     "Evoker": "Zenith, Mail",
     "Monk": "Zenith, Leather",
@@ -41,10 +41,10 @@ classes = {
     "Elemental Shaman": "Venerated, Mail"
 }
 
-# Define required classes for raid buffs
+# required raid buffs
 required_classes = {"Druid", "Paladin", "Monk", "Demon Hunter", "Rogue", "Mage", "Shaman", "Warrior", "Priest", "Evoker"}
 
-# Define character roles
+# roles
 roles = {
     "Tank": ["Druid", "Paladin", "Warrior", "Demon Hunter", "Death Knight"],
     "Healer": ["Priest", "Paladin", "Druid", "Monk", "Shaman", "Evoker"],
@@ -52,7 +52,7 @@ roles = {
     "Range DPS": ["Mage", "Elemental Shaman", "Evoker", "Priest", "Boomkin Druid", "Hunter", "Warlock"]
 }
 
-# List of main and split characters
+# main characters
 mains = [
     ("Scurro - M", "Tank", "Death Knight"),
     ("Karp - M", "Tank", "Druid"),
@@ -83,6 +83,7 @@ mains = [
     ("Kinmai - M", "Range DPS", "Shaman")
 ]
 
+# spilt characters
 splits = [
     ("Scoom - S", "Tank", "Paladin"),
     ("Karp - S", "Tank", "Death Knight"),
@@ -117,9 +118,9 @@ async def on_ready():
 
 @bot.command()
 async def roster(ctx):
-    tanks = random.sample([char for char in mains + splits if char[1] == "Tank"], 2)  # Ensure exactly 2 tanks
+    tanks = random.sample([char for char in mains + splits if char[1] == "Tank"], 2)  
     non_tanks = [char for char in mains + splits if char[1] != "Tank"]
-    selected_roster = random.sample(non_tanks, 28)  # Select exactly 28 non-tank characters
+    selected_roster = random.sample(non_tanks, 28)  
     response = "**Raid Roster:**\n" + "\n".join(
         f"**{name} ({role}, {char_class}, {classes.get(char_class, 'Unknown')})**" for name, role, char_class in tanks
     ) + "\n" + "\n".join(
@@ -127,5 +128,5 @@ async def roster(ctx):
     )
     await ctx.send(response)
 
-# Run the bot securely
-bot.run(os.getenv("DISCORD_BOT_TOKEN"))  # ✅ Securely loads the token from the .env file
+
+bot.run(os.getenv("DISCORD_BOT_TOKEN"))  
