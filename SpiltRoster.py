@@ -32,6 +32,7 @@ classes = {
     "Warlock": "Dreadful, Cloth",
     "Druid": "Mystic, Leather",
     "Boomkin Druid": "Mystic, Leather",
+    "Feral Druid": "Mystic, Leather",
     "Hunter": "Mystic, Mail",
     "Mage": "Mystic, Cloth",
     "Paladin": "Venerated, Plate",
