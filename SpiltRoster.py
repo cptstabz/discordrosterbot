@@ -6,53 +6,45 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Define bot with command prefix
+
 intents = discord.Intents.default()
 intents.messages = True
-intents.message_content = True  # Enable message content intent
+intents.message_content = True  
 
-bot = commands.Bot(command_prefix="!", intents=intents)  # ✅ Ensure bot is defined BEFORE calling bot.run()
+bot = commands.Bot(command_prefix="!", intents=intents)  
 
-# Define armor types
-armor_types = {
-    "Death Knight": "Plate",
-    "Paladin": "Plate",
-    "Warrior": "Plate",
-    "Hunter": "Mail",
-    "Shaman": "Mail",
-    "Evoker": "Mail",
-    "Mage": "Cloth",
-    "Priest": "Cloth",
-    "Warlock": "Cloth",
-    "Rogue": "Leather",
-    "Druid": "Leather",
-    "Monk": "Leather",
-    "Demon Hunter": "Leather"
-}
 
-# Define classes and their tier tokens
+intents = discord.Intents.default()
+intents.messages = True
+intents.message_content = True  
+
+
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+# tier tokens
 classes = {
-    "Evoker": "Zenith",
-    "Monk": "Zenith",
-    "Rogue": "Zenith",
-    "Warrior": "Zenith",
-    "Death Knight": "Dreadful",
-    "Demon Hunter": "Dreadful",
-    "Warlock": "Dreadful",
-    "Druid": "Mystic",
-    "Boomkin Druid": "Mystic",
-    "Hunter": "Mystic",
-    "Mage": "Mystic",
-    "Paladin": "Venerated",
-    "Priest": "Venerated",
-    "Shaman": "Venerated",
-    "Elemental Shaman": "Venerated"
+    "Evoker": "Zenith, Mail",
+    "Monk": "Zenith, Leather",
+    "Rogue": "Zenith, Leather",
+    "Warrior": "Zenith, Plate",
+    "Death Knight": "Dreadful, Plate",
+    "Demon Hunter": "Dreadful, Leather",
+    "Warlock": "Dreadful, Cloth",
+    "Druid": "Mystic, Leather",
+    "Boomkin Druid": "Mystic, Leather",
+    "Feral Druid": "Mystic, Leather",
+    "Hunter": "Mystic, Mail",
+    "Mage": "Mystic, Cloth",
+    "Paladin": "Venerated, Plate",
+    "Priest": "Venerated, Cloth",
+    "Shaman": "Venerated, Mail",
+    "Elemental Shaman": "Venerated, Mail"
 }
 
-# Define required classes for raid buffs
+# required raid buffs
 required_classes = {"Druid", "Paladin", "Monk", "Demon Hunter", "Rogue", "Mage", "Shaman", "Warrior", "Priest", "Evoker"}
 
-# Define character roles
+# roles
 roles = {
     "Tank": ["Druid", "Paladin", "Warrior", "Demon Hunter", "Death Knight"],
     "Healer": ["Priest", "Paladin", "Druid", "Monk", "Shaman", "Evoker"],
@@ -60,7 +52,38 @@ roles = {
     "Range DPS": ["Mage", "Elemental Shaman", "Evoker", "Priest", "Boomkin Druid", "Hunter", "Warlock"]
 }
 
-# List of split characters
+# main characters
+mains = [
+    ("Scurro - M", "Tank", "Death Knight"),
+    ("Karp - M", "Tank", "Druid"),
+    ("Magshock - M", "Healer", "Paladin"),
+    ("Holybazoo - M", "Healer", "Paladin"),
+    ("Kovah - M", "Healer", "Monk"),
+    ("Tehkthyr - M", "Healer", "Shaman"),
+    ("Bloodblain - M", "Healer", "Priest"),
+    ("Tamikochan - M", "Healer", "Priest"),
+    ("Akylix - M", "Melee DPS", "Demon Hunter"),
+    ("Skëlly - M", "Melee DPS", "Demon Hunter"),
+    ("Charley - M", "Melee DPS", "Monk"),
+    ("Cptstabz - M", "Melee DPS", "Rogue"),
+    ("Vynstabz - M", "Melee DPS", "Rogue"),
+    ("Koby - M", "Melee DPS", "Paladin"),
+    ("Urusa - M", "Melee DPS", "Warrior"),
+    ("Chocksticks - M", "Melee DPS", "Warrior"),
+    ("Mamichan - M", "Range DPS", "Mage"),
+    ("Meekaroo - M", "Range DPS", "Mage"),
+    ("Impquisition - M", "Range DPS", "Warlock"),
+    ("Zing - M", "Range DPS", "Warlock"),
+    ("Nezzyz - M", "Range DPS", "Boomkin Druid"),
+    ("Alcadeus - M", "Range DPS", "Evoker"),
+    ("Liz - M", "Range DPS", "Evoker"),
+    ("Ampered - M", "Range DPS", "Hunter"),
+    ("Buttadog - M", "Range DPS", "Hunter"),
+    ("Nexrax - M", "Range DPS", "Hunter"),
+    ("Kinmai - M", "Range DPS", "Shaman")
+]
+
+# spilt characters
 splits = [
     ("Scoom - S", "Tank", "Paladin"),
     ("Karp - S", "Tank", "Death Knight"),
@@ -95,15 +118,15 @@ async def on_ready():
 
 @bot.command()
 async def roster(ctx):
-    tanks = random.sample([char for char in splits if char[1] == "Tank"], 2)  # Ensure exactly 2 tanks from splits
-    non_tanks = [char for char in splits if char[1] != "Tank"]
-    selected_roster = random.sample(non_tanks, 28)  # Select exactly 28 non-tank characters
+    tanks = random.sample([char for char in mains + splits if char[1] == "Tank"], 2)  
+    non_tanks = [char for char in mains + splits if char[1] != "Tank"]
+    selected_roster = random.sample(non_tanks, 28)  
     response = "**Raid Roster:**\n" + "\n".join(
-        f"**{name} ({role}, {char_class}, {classes.get(char_class, 'Unknown')}, {armor_types.get(char_class, 'Unknown')})**" for name, role, char_class in tanks
+        f"**{name} ({role}, {char_class}, {classes.get(char_class, 'Unknown')})**" for name, role, char_class in tanks
     ) + "\n" + "\n".join(
-        f"{name} ({role}, {char_class}, {classes.get(char_class, 'Unknown')}, {armor_types.get(char_class, 'Unknown')})" for name, role, char_class in selected_roster
+        f"{name} ({role}, {char_class}, {classes.get(char_class, 'Unknown')})" for name, role, char_class in selected_roster
     )
     await ctx.send(response)
 
-# Run the bot securely
-bot.run(os.getenv("DISCORD_BOT_TOKEN"))  # ✅ Securely loads the token from the .env file
+
+bot.run(os.getenv("DISCORD_BOT_TOKEN"))  
